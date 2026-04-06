@@ -35,6 +35,6 @@ This file is template boilerplate. Replace it with documentation about your plug
 
 ## How the CI works
 
-- Pushing to `main` builds the plugin and deploys it to the GAMA experimental p2 site.
+- Pushing to `main` builds the plugin and deploys it to the GAMA plugin p2 site.
 - The version and deploy path are derived automatically from the branch name (`GAMA_YYYY-MM`).
 - On successful deploy, the composite p2 repository is updated automatically — your plugin becomes installable from Eclipse immediately.

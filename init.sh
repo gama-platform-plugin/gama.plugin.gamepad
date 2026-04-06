@@ -47,7 +47,7 @@ echo ""
 # Derive short name and Java class name from plugin ID
 PLUGIN_SHORT="${PLUGIN_ID##*.}"   # gama.plugin.flooding → flooding
 CLASS_NAME="$(tr '[:lower:]' '[:upper:]' <<< "${PLUGIN_SHORT:0:1}")${PLUGIN_SHORT:1}Skill"
-PACKAGE_PATH="${PLUGIN_ID//.//}"  # gama.plugin.flooding → gama/experimental/flooding
+PACKAGE_PATH="${PLUGIN_ID//.//}"  # gama.plugin.flooding → gama/plugin/flooding
 
 # ── 1. Rename directories ────────────────────────────────────────────────────
 echo "Renaming directories..."
@@ -67,9 +67,9 @@ sed -i "s/gama\.plugin\.MY_PLUGIN/$PLUGIN_ID/g" "$PLUGIN_ID/pom.xml"
 # ── 3. Rename Java skill (package dir + class name) ─────────────────────────
 echo "Renaming Java skill..."
 mkdir -p "$PLUGIN_ID/src/$PACKAGE_PATH"
-mv "$PLUGIN_ID/src/gama/experimental/MY_PLUGIN/MySkill.java" \
+mv "$PLUGIN_ID/src/gama/plugin/MY_PLUGIN/MySkill.java" \
    "$PLUGIN_ID/src/$PACKAGE_PATH/${CLASS_NAME}.java"
-rm -rf "$PLUGIN_ID/src/gama/experimental/MY_PLUGIN"
+rm -rf "$PLUGIN_ID/src/gama/plugin/MY_PLUGIN"
 
 sed -i \
     -e "s/package gama\.plugin\.MY_PLUGIN/package ${PLUGIN_ID}/" \
