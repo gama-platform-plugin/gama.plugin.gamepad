@@ -6,7 +6,7 @@ Go to **Actions → Initialize plugin from template → Run workflow** and fill 
 
 | Field | Example |
 |---|---|
-| Plugin bundle ID | `gama.experimental.flooding` |
+| Plugin bundle ID | `gama.plugin.flooding` |
 | Human-readable name | `Flooding Simulation` |
 
 This will rename all placeholder files and directories to match your plugin, then commit the result. No local setup needed.
@@ -21,7 +21,7 @@ This will rename all placeholder files and directories to match your plugin, the
 git pull
 ```
 
-Your plugin is now in `gama.experimental.yourplugin/` with a working `MySkill.java` as a starting point.
+Your plugin is now in `gama.plugin.yourplugin/` with a working `MySkill.java` as a starting point.
 
 Open the project in Eclipse as a standard Maven/Tycho project.
 

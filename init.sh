@@ -5,7 +5,7 @@
 #   bash init.sh <plugin-id> <plugin-label>
 #
 # Arguments:
-#   plugin-id     OSGi bundle ID with exactly 3 dot-separated parts, e.g. gama.experimental.flooding
+#   plugin-id     OSGi bundle ID with exactly 3 dot-separated parts, e.g. gama.plugin.flooding
 #   plugin-label  Human-readable name, e.g. "Flooding Simulation"
 #
 # The feature ID is automatically derived by inserting .feature. before the third part:
@@ -18,12 +18,12 @@ PLUGIN_LABEL="$2"
 
 if [[ -z "$PLUGIN_ID" || -z "$PLUGIN_LABEL" ]]; then
     echo "Usage: bash init.sh <plugin-id> <plugin-label>"
-    echo "  e.g. bash init.sh gama.experimental.flooding \"Flooding Simulation\""
+    echo "  e.g. bash init.sh gama.plugin.flooding \"Flooding Simulation\""
     exit 1
 fi
 
 if [[ ! "$PLUGIN_ID" =~ ^[^.]+\.[^.]+\.[^.]+$ ]]; then
-    echo "ERROR: plugin-id must have exactly 3 dot-separated parts (e.g. gama.experimental.flooding)"
+    echo "ERROR: plugin-id must have exactly 3 dot-separated parts (e.g. gama.plugin.flooding)"
     exit 1
 fi
 
@@ -45,9 +45,9 @@ echo "Label     : $PLUGIN_LABEL"
 echo ""
 
 # Derive short name and Java class name from plugin ID
-PLUGIN_SHORT="${PLUGIN_ID##*.}"   # gama.experimental.flooding → flooding
+PLUGIN_SHORT="${PLUGIN_ID##*.}"   # gama.plugin.flooding → flooding
 CLASS_NAME="$(tr '[:lower:]' '[:upper:]' <<< "${PLUGIN_SHORT:0:1}")${PLUGIN_SHORT:1}Skill"
-PACKAGE_PATH="${PLUGIN_ID//.//}"  # gama.experimental.flooding → gama/experimental/flooding
+PACKAGE_PATH="${PLUGIN_ID//.//}"  # gama.plugin.flooding → gama/experimental/flooding
 
 # ── 1. Rename directories ────────────────────────────────────────────────────
 echo "Renaming directories..."
@@ -58,11 +58,11 @@ mv MY_PLUGIN.feature "$FEATURE_ID"
 echo "Updating plugin files..."
 sed -i \
     -e "s/Bundle-Name: MY_PLUGIN/Bundle-Name: $PLUGIN_LABEL/" \
-    -e "s/Bundle-SymbolicName: gama\.experimental\.MY_PLUGIN/Bundle-SymbolicName: $PLUGIN_ID/" \
-    -e "s/Automatic-Module-Name: gama\.experimental\.MY_PLUGIN/Automatic-Module-Name: $PLUGIN_ID/" \
+    -e "s/Bundle-SymbolicName: gama\.plugin\.MY_PLUGIN/Bundle-SymbolicName: $PLUGIN_ID/" \
+    -e "s/Automatic-Module-Name: gama\.plugin\.MY_PLUGIN/Automatic-Module-Name: $PLUGIN_ID/" \
     "$PLUGIN_ID/META-INF/MANIFEST.MF"
 
-sed -i "s/gama\.experimental\.MY_PLUGIN/$PLUGIN_ID/g" "$PLUGIN_ID/pom.xml"
+sed -i "s/gama\.plugin\.MY_PLUGIN/$PLUGIN_ID/g" "$PLUGIN_ID/pom.xml"
 
 # ── 3. Rename Java skill (package dir + class name) ─────────────────────────
 echo "Renaming Java skill..."
@@ -72,7 +72,7 @@ mv "$PLUGIN_ID/src/gama/experimental/MY_PLUGIN/MySkill.java" \
 rm -rf "$PLUGIN_ID/src/gama/experimental/MY_PLUGIN"
 
 sed -i \
-    -e "s/package gama\.experimental\.MY_PLUGIN/package ${PLUGIN_ID}/" \
+    -e "s/package gama\.plugin\.MY_PLUGIN/package ${PLUGIN_ID}/" \
     -e "s/my_skill/${PLUGIN_SHORT}_skill/" \
     -e "s/my_action/${PLUGIN_SHORT}_action/" \
     -e "s/MySkill/${CLASS_NAME}/g" \
@@ -81,12 +81,12 @@ sed -i \
 # ── 4. Feature (feature.xml, pom.xml) ───────────────────────────────────────
 echo "Updating feature files..."
 sed -i \
-    -e "s/id=\"gama\.experimental\.feature\.MY_PLUGIN\"/id=\"$FEATURE_ID\"/" \
+    -e "s/id=\"gama\.plugin\.feature\.MY_PLUGIN\"/id=\"$FEATURE_ID\"/" \
     -e "s/label=\"MY_PLUGIN\"/label=\"$PLUGIN_LABEL\"/" \
-    -e "s/id=\"gama\.experimental\.MY_PLUGIN\"/id=\"$PLUGIN_ID\"/" \
+    -e "s/id=\"gama\.plugin\.MY_PLUGIN\"/id=\"$PLUGIN_ID\"/" \
     "$FEATURE_ID/feature.xml"
 
-sed -i "s/gama\.experimental\.feature\.MY_PLUGIN/$FEATURE_ID/g" "$FEATURE_ID/pom.xml"
+sed -i "s/gama\.plugin\.feature\.MY_PLUGIN/$FEATURE_ID/g" "$FEATURE_ID/pom.xml"
 
 # ── 5. Parent POM modules ────────────────────────────────────────────────────
 echo "Updating parent/pom.xml modules..."
@@ -98,7 +98,7 @@ sed -i \
 # ── 6. p2updatesite category.xml ────────────────────────────────────────────
 echo "Updating p2updatesite/category.xml..."
 sed -i \
-    -e "s/gama\.experimental\.feature\.MY_PLUGIN/$FEATURE_ID/g" \
+    -e "s/gama\.plugin\.feature\.MY_PLUGIN/$FEATURE_ID/g" \
     -e "s/MY_PLUGIN/$PLUGIN_LABEL/g" \
     p2updatesite/category.xml
 

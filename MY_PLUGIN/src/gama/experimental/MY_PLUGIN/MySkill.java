@@ -1,4 +1,4 @@
-package gama.experimental.MY_PLUGIN;
+package gama.plugin.MY_PLUGIN;
 
 import gama.annotations.precompiler.GamaAnnotations.action;
 import gama.annotations.precompiler.GamaAnnotations.doc;

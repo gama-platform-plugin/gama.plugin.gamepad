@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       plugin_id:
-        description: 'Plugin bundle ID (must start with gama.experimental.)'
+        description: 'Plugin bundle ID (must start with gama.plugin.)'
         required: true
-        default: 'gama.experimental.myplugin'
+        default: 'gama.plugin.myplugin'
       plugin_label:
         description: 'Human-readable plugin name'
         required: true
