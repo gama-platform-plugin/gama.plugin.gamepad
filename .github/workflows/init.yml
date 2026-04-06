@@ -30,6 +30,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git rm .github/workflows/init.yml
+          git rm init.sh
           git add -A
           git commit -m "init: rename template to ${{ github.event.inputs.plugin_id }}"
           git push
