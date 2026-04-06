@@ -23,7 +23,7 @@
     <modules>
         <module>../MY_PLUGIN</module>
         <module>../MY_PLUGIN.feature</module>
-        <module>../p2updatesite</module>
+        <module>../gama.plugin.p2updatesite</module>
     </modules>
 
     <repositories>
