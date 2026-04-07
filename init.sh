@@ -93,14 +93,14 @@ echo "Updating parent/pom.xml modules..."
 sed -i \
     -e "s|../MY_PLUGIN.feature|../$FEATURE_ID|" \
     -e "s|../MY_PLUGIN|../$PLUGIN_ID|" \
-    parent/pom.xml
+    gama.plugin.parent/pom.xml
 
 # ── 6. p2updatesite category.xml ────────────────────────────────────────────
 echo "Updating p2updatesite/category.xml..."
 sed -i \
     -e "s/gama\.plugin\.feature\.MY_PLUGIN/$FEATURE_ID/g" \
     -e "s/MY_PLUGIN/$PLUGIN_LABEL/g" \
-    p2updatesite/category.xml
+    gama.plugin.p2updatesite/category.xml
 
 # ── 7. Remove template boilerplate ──────────────────────────────────────────
 echo "Removing template README..."
