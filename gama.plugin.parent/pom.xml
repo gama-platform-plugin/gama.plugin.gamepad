@@ -64,7 +64,7 @@
         </dependency>
         <dependency>
             <groupId>org.gama</groupId>
-            <artifactId>gama.api</artifactId>
+            <artifactId>gama.core</artifactId>
             <version>${gama.version}</version>
         </dependency>
     </dependencies>
