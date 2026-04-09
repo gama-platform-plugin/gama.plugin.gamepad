@@ -3,7 +3,8 @@ Bundle-ManifestVersion: 2
 Bundle-Name: MY_PLUGIN
 Bundle-SymbolicName: gama.plugin.MY_PLUGIN;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: gama.core;bundle-version="0.0.0",
- gama.dependencies;bundle-version="0.0.0"
+ gama.dependencies;bundle-version="0.0.0",gama.annotations,
+ gama.processor,gama.api
 Automatic-Module-Name: gama.plugin.MY_PLUGIN
