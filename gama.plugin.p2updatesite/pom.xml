@@ -14,6 +14,8 @@
     <properties>
         <!-- Overridden at build time via -Ddeploy.subdir and -Dgama.p2.version -->
         <deploy.subdir>UNKNOWN_PLUGIN</deploy.subdir>
+        <maven.build.cache.skipCache>true</maven.build.cache.skipCache>
+        <maven.build.cache.enabled>false</maven.build.cache.enabled>
     </properties>
 
     <distributionManagement>
@@ -38,6 +40,8 @@
                 <!-- ${deploy.subdir} is replaced at build time by build.sh -->
                 <ftp.toDir>/var/www/gama_updates/plugin/${gama.p2.version}/${deploy.subdir}</ftp.toDir>
                 <repo.path>${project.build.directory}/repository/</repo.path>
+                <maven.build.cache.skipCache>true</maven.build.cache.skipCache>
+                <maven.build.cache.enabled>false</maven.build.cache.enabled>
             </properties>
             <build>
                 <plugins>
