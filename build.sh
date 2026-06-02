@@ -14,7 +14,7 @@ else
 fi
 
 cd "${ROOT}/gama.plugin.parent"
-mvn clean install -B -e \
+mvn clean install -B -e -T 4 \
     -Dmaven.build.cache.configPath="maven-build-cache-config.xml" \
     -Dgama.p2.version="${GAMA_P2_VERSION}" \
     -Ddeploy.subdir="${PLUGIN_REPO_NAME}" \
