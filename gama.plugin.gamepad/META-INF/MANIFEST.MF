@@ -5,6 +5,8 @@ Bundle-SymbolicName: gama.plugin.gamepad;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-25
 Require-Bundle: gama.core;bundle-version="0.0.0",
- gama.dependencies;bundle-version="0.0.0",gama.annotations,
- gama.processor,gama.api
+ gama.dependencies;bundle-version="0.0.0",
+ gama.annotations,
+ gama.processor,
+ gama.api
 Automatic-Module-Name: gama.plugin.gamepad

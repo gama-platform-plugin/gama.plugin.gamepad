@@ -1,9 +1,10 @@
 package gama.plugin.gamepad;
 
-import gama.annotations.precompiler.GamaAnnotations.action;
-import gama.annotations.precompiler.GamaAnnotations.doc;
-import gama.annotations.precompiler.GamaAnnotations.skill;
-import gama.gaml.skills.Skill;
+import gama.annotations.action;
+import gama.annotations.doc;
+import gama.annotations.skill;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
 
 /**
  * Entry point for your GAML skill.
@@ -18,9 +19,9 @@ import gama.gaml.skills.Skill;
 @doc("Sample skill — replace with your implementation.")
 public class GamepadSkill extends Skill {
 
-	@action(name = "gamepad_action")
+	@action(name = "gamepad_action")	
 	@doc("Sample action — replace or remove.")
-	public Object myAction(final gama.core.runtime.IScope scope) {
+	public Object myAction(final IScope scope) {
 		// TODO: implement
 		return null;
 	}
