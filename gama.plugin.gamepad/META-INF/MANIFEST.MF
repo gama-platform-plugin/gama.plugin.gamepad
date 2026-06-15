@@ -10,3 +10,5 @@ Require-Bundle: gama.core;bundle-version="0.0.0",
  gama.processor,
  gama.api
 Automatic-Module-Name: gama.plugin.gamepad
+Bundle-ClassPath: libs/input4j-1.3.0.jar,
+ .

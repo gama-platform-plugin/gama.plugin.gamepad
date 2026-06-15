@@ -49,11 +49,16 @@
         <artifactId>wagon-ssh</artifactId>
         <version>${wagon.version}</version>
       </extension>
-			<extension>
-				<groupId>org.apache.maven.extensions</groupId>
-				<artifactId>maven-build-cache-extension</artifactId>
-				<version>1.2.2</version>
-			</extension>
+      <!-- maven-build-cache-extension disabled for IDE/m2e: its constructor NPEs because
+           getMultiModuleProjectDirectory() is null in Eclipse's embedded Maven runtime.
+           CLI builds are unaffected (build.sh's -Dmaven.build.cache.* flags become no-ops). -->
+      <!--
+      <extension>
+        <groupId>org.apache.maven.extensions</groupId>
+        <artifactId>maven-build-cache-extension</artifactId>
+        <version>1.2.2</version>
+      </extension>
+      -->
     </extensions>
     <plugins>
       <plugin>
