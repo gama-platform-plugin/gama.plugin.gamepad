@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.google.common.base.Strings;
+
 import de.gurkenlabs.input4j.InputComponent;
 import de.gurkenlabs.input4j.InputDevice;
 import de.gurkenlabs.input4j.InputDevicePlugin;
@@ -57,11 +59,12 @@ public class GamepadOperators {
 
 	private GamepadOperators() {}
 
-	@action (
-			name = "get_gamepads",
+	@operator(
+			value = "get_gamepads",
+			category = { "Gamepad" },
 			doc = @doc ("Returns the ids of the currently connected gamepads."))
-	public static IList<String> gamepads(final IScope scope) {
-		return GamaListFactory.wrap(Types.STRING, _devices.values().stream().map(d -> d.getName()).toList());
+	public static IList<String> gamepads(final IScope scope, final String filter) {
+		return GamaListFactory.wrap(Types.STRING, _devices.values().stream().map(d -> d.getID()).filter(n -> (Strings.isNullOrEmpty(filter) || n == null) ? true : n.contains(filter)).toList());
 	}
 
 	@operator (
@@ -69,6 +72,7 @@ public class GamepadOperators {
 			category = { "Gamepad" },
 			doc = @doc ("Returns whether a gamepad with the given id is currently connected."))
 	public static boolean gamepadConnected(final IScope scope, final String id) {
+		if (id == null) return false;
 		return _devices.containsKey(id);
 	}
 
@@ -77,6 +81,7 @@ public class GamepadOperators {
 			category = { "Gamepad" },
 			doc = @doc ("Returns the human-readable display name of the gamepad with the given id (empty string if it is not connected)."))
 	public static String gamepadName(final IScope scope, final String id) {
+		if (id == null) return null;
 		final InputDevice device = _devices.get(id);
 		return device == null ? "" : device.getDisplayName();
 	}
@@ -87,14 +92,17 @@ public class GamepadOperators {
 			content_type = IType.STRING,
 			doc = @doc ("Returns the names of all the components (buttons and axes) exposed by the gamepad with the given id."))
 	public static IList<String> gamepadComponents(final IScope scope, final String id) {
-		final List<String> names = new ArrayList<>();
+		final IList<String> names = GamaListFactory.create(scope, Types.STRING);
+		
+		if (id == null) return names;
+		
 		final InputDevice device = _devices.get(id);
 		if (device != null) {
 			for (final InputComponent c : device.getComponents()) {
 				names.add(c.getId().name);
 			}
 		}
-		return GamaListFactory.create(scope, Types.STRING, names);
+		return names;
 	}
 
 	@operator (
@@ -102,6 +110,9 @@ public class GamepadOperators {
 			category = { "Gamepad" },
 			doc = @doc ("Polls the gamepad with the given id and returns the current value of the named component: 0.0 or 1.0 for a button, usually a value in [-1.0, 1.0] for an axis. Returns 0.0 if the gamepad or the component is unknown."))
 	public static double gamepadValue(final IScope scope, final String id, final String component) {
+		
+		if (id == null) return 0;
+		
 		final InputDevice device = _devices.get(id);
 		if (device == null) return 0.0;
 		device.poll();
@@ -114,7 +125,10 @@ public class GamepadOperators {
 			content_type = IType.STRING,
 			doc = @doc ("Polls the gamepad with the given id and returns the names of the buttons that are currently pressed."))
 	public static IList<String> gamepadPressedButtons(final IScope scope, final String id) {
-		final List<String> pressed = new ArrayList<>();
+		IList<String> pressed = GamaListFactory.create(scope, Types.STRING);
+		
+		if (id == null) return pressed;
+		
 		final InputDevice device = _devices.get(id);
 		if (device != null) {
 			device.poll();
@@ -124,7 +138,7 @@ public class GamepadOperators {
 				}
 			}
 		}
-		return GamaListFactory.create(scope, Types.STRING, pressed);
+		return pressed;
 	}
 
 }
