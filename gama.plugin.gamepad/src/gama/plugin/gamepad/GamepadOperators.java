@@ -14,6 +14,8 @@ import de.gurkenlabs.input4j.InputDevices;
 import gama.annotations.action;
 import gama.annotations.doc;
 import gama.annotations.operator;
+import gama.api.GAMA;
+import gama.api.exceptions.GamaRuntimeException;
 import gama.api.gaml.types.IType;
 import gama.api.gaml.types.Types;
 import gama.api.runtime.scope.IScope;
@@ -64,7 +66,11 @@ public class GamepadOperators {
 			category = { "Gamepad" },
 			doc = @doc ("Returns the ids of the currently connected gamepads."))
 	public static IList<String> gamepads(final IScope scope, final String filter) {
-		return GamaListFactory.wrap(Types.STRING, _devices.values().stream().map(d -> d.getID()).filter(n -> (Strings.isNullOrEmpty(filter) || n == null) ? true : n.contains(filter)).toList());
+		if (_plugin != null) {
+			return GamaListFactory.wrap(Types.STRING, _plugin.getAll().stream().map(d -> d.getID()).filter(n -> (Strings.isNullOrEmpty(filter) || n == null) ? true : n.contains(filter)).toList());
+		}
+		GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.warning("input4j didn't load, gamepad plugin cannot work", scope), false);
+		return null;
 	}
 
 	@operator (
